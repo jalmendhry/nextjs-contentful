@@ -23,3 +23,9 @@ collections:
           summary: '{{fields.image}}',
           field: { label: Image, name: image, widget: image },
         }
+      - label: 'Content Row'
+        name: 'contentRow'
+        widget: 'list'
+        fields:
+          - { label: 'Content', name: 'content', widget: 'markdown' }
+          - { label: 'image', name: 'image', widget: 'image' }
