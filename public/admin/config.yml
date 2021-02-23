@@ -24,11 +24,10 @@ collections:
           field: { label: Image, name: image, widget: image },
         }
       - {
-          label: "Content Row",
-          name: "contentRow",
-          widget: "list",
+          label: 'Content Row',
+          name: 'contentRow',
+          widget: 'list',
           summary: '{{fields.image}}',
-          fields:
-            - {label: Image, name: image, widget: image }
-            - {label: Content, name: content, widget: markdown}
-      }
+          fields: { label: Image, name: image, widget: image },
+          { label: Content, name: content, widget: markdown },
+        }
