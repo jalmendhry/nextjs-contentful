@@ -23,8 +23,12 @@ collections:
           summary: '{{fields.image}}',
           field: { label: Image, name: image, widget: image },
         }
-  # - name: 'carousel'
-  #   label: 'Carousel'
-  #   folder: 'carousels'
-  #   create: true
-  #   fields
+      - {
+          label: "Content Row",
+          name: "contentRow",
+          widget: "list",
+          summary: '{{fields.image}}',
+          fields:
+            - {label: Image, name: image, widget: image },
+            - {label: Content, name: content, widget: markdown},
+      }

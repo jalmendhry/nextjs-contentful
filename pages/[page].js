@@ -50,6 +50,36 @@ const Page = ({ htmlString, data }) => {
   );
 };
 
+export const getStaticPaths = async () => {
+  const files = fs.readdirSync('cms-pages');
+  const paths = files.map((filename) => ({
+    params: {
+      page: filename.replace('.md', ''),
+    },
+  }));
+
+  return {
+    paths,
+    fallback: false,
+  };
+};
+
+export const getStaticProps = async ({ params: { page } }) => {
+  const markdownWithMetadata = fs
+    .readFileSync(path.join('cms-pages', page + '.md'))
+    .toString();
+
+  const parsedMarkdown = matter(markdownWithMetadata);
+  const htmlString = marked(parsedMarkdown.data.content);
+
+  return {
+    props: {
+      htmlString,
+      data: parsedMarkdown.data,
+    },
+  };
+};
+
 // export const getServerSideProps = async ({ params }) => {
 //   const { page } = params;
 
@@ -88,35 +118,5 @@ const Page = ({ htmlString, data }) => {
 //     fallback: false, //indicates the type of fallback
 //   };
 // };
-
-export const getStaticPaths = async () => {
-  const files = fs.readdirSync('cms-pages');
-  const paths = files.map((filename) => ({
-    params: {
-      page: filename.replace('.md', ''),
-    },
-  }));
-
-  return {
-    paths,
-    fallback: false,
-  };
-};
-
-export const getStaticProps = async ({ params: { page } }) => {
-  const markdownWithMetadata = fs
-    .readFileSync(path.join('cms-pages', page + '.md'))
-    .toString();
-
-  const parsedMarkdown = matter(markdownWithMetadata);
-  const htmlString = marked(parsedMarkdown.data.content);
-
-  return {
-    props: {
-      htmlString,
-      data: parsedMarkdown.data,
-    },
-  };
-};
 
 export default Page;
