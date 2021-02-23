@@ -5,53 +5,28 @@ import path from 'path';
 import matter from 'gray-matter';
 import marked from 'marked';
 
-// import { Carousel } from 'react-responsive-carousel';
-// import 'react-responsive-carousel/lib/styles/carousel.min.css'; // requires a loader
-
-// import { documentToReactComponents } from '@contentful/rich-text-react-renderer';
+import { Carousel } from 'react-responsive-carousel';
+import 'react-responsive-carousel/lib/styles/carousel.min.css'; // requires a loader
 
 import Layout from '../components/Layout';
-// import { client } from '../utils/client';
 
 const Page = ({ htmlString, data }) => {
-  console.log(htmlString, 'the string');
-  console.log(data, 'the string');
-  // useEffect(() => {
-  //   if (pageData == null) {
-  //     Router.push('404');
-  //   }
-  // }, [pageData]);
-
-  // if (pageData === null) {
-  //   return false;
-  // }
-
-  // const { pageTitle, mainContent, carousel, contentRow } = pageData;
   return (
     <>
-      <Layout pageTitle={data.title}>
-        <p>Hi</p>
-        <div dangerouslySetInnerHTML={{ __html: htmlString }} />
-      </Layout>
-      {/* <Layout pageTitle={pageTitle}>
-        {carousel && carousel.length > 0 && (
-          <Carousel>
-            {carousel.map(({ fields }, index) => {
-              const { file, description } = fields;
-              return (
-                <div key={index}>
-                  <img src={`https:${file.url}`} alt=""></img>
-                  <p className="legend">{description}</p>
-                </div>
-              );
-            })}
-          </Carousel>
-        )}
-        <div className="content-wrapper">
-          {documentToReactComponents(mainContent)}
-        </div>
+      <Layout pageTitle={data.pageTitle}>
+        <Carousel>
+          <div>
+            <img src={data.thumbnail} alt=""></img>
+            {/* <p className="legend">{description}</p> */}
+          </div>
+        </Carousel>
 
-        {contentRow &&
+        <div
+          className="content-wrapper"
+          dangerouslySetInnerHTML={{ __html: htmlString }}
+        />
+
+        {/* {contentRow &&
           contentRow.map(({ fields }, index) => {
             const { content, image } = fields;
 
@@ -63,8 +38,8 @@ const Page = ({ htmlString, data }) => {
                 </div>
               </div>
             );
-          })}
-      </Layout>*/}
+          })} */}
+      </Layout>
     </>
   );
 };

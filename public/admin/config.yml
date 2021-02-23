@@ -16,3 +16,9 @@ collections:
       - { label: 'Meta Description', name: 'description', widget: 'string' }
       - { label: 'Featured Image', name: 'thumbnail', widget: 'image' }
       - { label: 'Main Content', name: 'content', widget: 'markdown' }
+      - { label: "Carousel", name: "carousel", widget: 'list', summary: "{{fields.image}}", field: { label: Image, name: image, widget: image}
+  # - name: 'carousel'
+  #   label: 'Carousel'
+  #   folder: 'carousels'
+  #   create: true
+  #   fields
