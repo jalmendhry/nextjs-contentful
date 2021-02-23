@@ -29,6 +29,6 @@ collections:
           widget: "list",
           summary: '{{fields.image}}',
           fields:
-            - {label: Image, name: image, widget: image },
-            - {label: Content, name: content, widget: markdown},
+            - {label: Image, name: image, widget: image }
+            - {label: Content, name: content, widget: markdown}
       }
