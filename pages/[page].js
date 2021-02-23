@@ -1,12 +1,10 @@
-import React, { useEffect } from 'react';
 import fs from 'fs';
 import path from 'path';
 import matter from 'gray-matter';
-import marked from 'marked';
-import ReactMarkdown from 'react-markdown';
 
+import ReactMarkdown from 'react-markdown';
 import { Carousel } from 'react-responsive-carousel';
-import 'react-responsive-carousel/lib/styles/carousel.min.css'; // requires a loader
+import 'react-responsive-carousel/lib/styles/carousel.min.css';
 
 import Layout from '../components/Layout';
 
