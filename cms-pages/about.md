@@ -26,4 +26,6 @@ contentRow:
 
       # hihi
     image: /images/pine-watt-2hzmz15wgik-unsplash.jpg
+  - content: "# 2nd row"
+    image: https://thumbs.dreamstime.com/z/palms-tropical-beach-white-sand-summer-vacation-travel-holiday-background-concept-caribbean-paradise-beach-palms-136606345.jpg
 ---
