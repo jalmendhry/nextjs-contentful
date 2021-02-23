@@ -1,22 +1,22 @@
 import React, { useEffect } from 'react';
-import Router from 'next/router';
 import fs from 'fs';
 import path from 'path';
 import matter from 'gray-matter';
 import marked from 'marked';
+import ReactMarkdown from 'react-markdown';
 
 import { Carousel } from 'react-responsive-carousel';
 import 'react-responsive-carousel/lib/styles/carousel.min.css'; // requires a loader
 
 import Layout from '../components/Layout';
 
-const Page = ({ htmlString, data }) => {
+const Page = ({ pageData: { pageTitle, carousel, contentRow, content } }) => {
   return (
     <>
-      <Layout pageTitle={data.pageTitle}>
-        {data.carousel && data.carousel.length > 0 && (
+      <Layout pageTitle={pageTitle}>
+        {carousel && carousel.length > 0 && (
           <Carousel>
-            {data.carousel.map((image, index) => {
+            {carousel.map((image, index) => {
               return (
                 <div key={index}>
                   <img src={image} alt=""></img>
@@ -27,24 +27,23 @@ const Page = ({ htmlString, data }) => {
           </Carousel>
         )}
 
-        <div
-          className="content-wrapper"
-          dangerouslySetInnerHTML={{ __html: htmlString }}
-        />
+        <div className="content-wrapper">
+          <ReactMarkdown>{content}</ReactMarkdown>
+        </div>
 
-        {/* {contentRow &&
-          contentRow.map(({ fields }, index) => {
-            const { content, image } = fields;
+        {contentRow &&
+          contentRow.map((row, index) => {
+            const { content, image } = row;
 
             return (
               <div className="content-row" key={index}>
-                <img src={`https://${image.fields.file.url}`} alt="" />
+                <img src={image} alt="" />
                 <div className="content-wrapper">
-                  {documentToReactComponents(content)}
+                  <ReactMarkdown>{content}</ReactMarkdown>
                 </div>
               </div>
             );
-          })} */}
+          })}
       </Layout>
     </>
   );
@@ -69,13 +68,11 @@ export const getStaticProps = async ({ params: { page } }) => {
     .readFileSync(path.join('cms-pages', page + '.md'))
     .toString();
 
-  const parsedMarkdown = matter(markdownWithMetadata);
-  const htmlString = marked(parsedMarkdown.data.content);
+  const { data } = matter(markdownWithMetadata);
 
   return {
     props: {
-      htmlString,
-      data: parsedMarkdown.data,
+      pageData: data,
     },
   };
 };
