@@ -14,12 +14,18 @@ const Page = ({ htmlString, data }) => {
   return (
     <>
       <Layout pageTitle={data.pageTitle}>
-        <Carousel>
-          <div>
-            <img src={data.thumbnail} alt=""></img>
-            {/* <p className="legend">{description}</p> */}
-          </div>
-        </Carousel>
+        {data.carousel && data.carousel.length > 0 && (
+          <Carousel>
+            {data.carousel.map((image, index) => {
+              return (
+                <div key={index}>
+                  <img src={image} alt=""></img>
+                  <p className="legend">some image</p>
+                </div>
+              );
+            })}
+          </Carousel>
+        )}
 
         <div
           className="content-wrapper"
@@ -103,8 +109,7 @@ export const getStaticProps = async ({ params: { page } }) => {
     .toString();
 
   const parsedMarkdown = matter(markdownWithMetadata);
-
-  const htmlString = marked(parsedMarkdown.content);
+  const htmlString = marked(parsedMarkdown.data.content);
 
   return {
     props: {
