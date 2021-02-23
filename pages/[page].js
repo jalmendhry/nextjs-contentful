@@ -1,29 +1,39 @@
 import React, { useEffect } from 'react';
 import Router from 'next/router';
+import fs from 'fs';
+import path from 'path';
+import matter from 'gray-matter';
+import marked from 'marked';
 
-import { Carousel } from 'react-responsive-carousel';
-import 'react-responsive-carousel/lib/styles/carousel.min.css'; // requires a loader
+// import { Carousel } from 'react-responsive-carousel';
+// import 'react-responsive-carousel/lib/styles/carousel.min.css'; // requires a loader
 
-import { documentToReactComponents } from '@contentful/rich-text-react-renderer';
+// import { documentToReactComponents } from '@contentful/rich-text-react-renderer';
 
 import Layout from '../components/Layout';
-import { client } from '../utils/client';
+// import { client } from '../utils/client';
 
-const Page = ({ pageData }) => {
-  useEffect(() => {
-    if (pageData == null) {
-      Router.push('404');
-    }
-  }, [pageData]);
+const Page = ({ htmlString, data }) => {
+  console.log(htmlString, 'the string');
+  console.log(data, 'the string');
+  // useEffect(() => {
+  //   if (pageData == null) {
+  //     Router.push('404');
+  //   }
+  // }, [pageData]);
 
-  if (pageData === null) {
-    return false;
-  }
+  // if (pageData === null) {
+  //   return false;
+  // }
 
-  const { pageTitle, mainContent, carousel, contentRow } = pageData;
+  // const { pageTitle, mainContent, carousel, contentRow } = pageData;
   return (
     <>
-      <Layout pageTitle={pageTitle}>
+      <Layout pageTitle={data.title}>
+        <p>Hi</p>
+        <div dangerouslySetInnerHTML={{ __html: htmlString }} />
+      </Layout>
+      {/* <Layout pageTitle={pageTitle}>
         {carousel && carousel.length > 0 && (
           <Carousel>
             {carousel.map(({ fields }, index) => {
@@ -54,34 +64,34 @@ const Page = ({ pageData }) => {
               </div>
             );
           })}
-      </Layout>
+      </Layout>*/}
     </>
   );
 };
 
-export const getServerSideProps = async ({ params }) => {
-  const { page } = params;
+// export const getServerSideProps = async ({ params }) => {
+//   const { page } = params;
 
-  const result = await client.getEntries({
-    content_type: 'page',
-    'fields.slug[in]': page,
-  });
+//   const result = await client.getEntries({
+//     content_type: 'page',
+//     'fields.slug[in]': page,
+//   });
 
-  if (result.items.length && result.items) {
-    const { fields } = result.items[0];
-    return {
-      props: {
-        pageData: fields,
-      },
-    };
-  }
+//   if (result.items.length && result.items) {
+//     const { fields } = result.items[0];
+//     return {
+//       props: {
+//         pageData: fields,
+//       },
+//     };
+//   }
 
-  return {
-    props: {
-      pageData: null,
-    },
-  };
-};
+//   return {
+//     props: {
+//       pageData: null,
+//     },
+//   };
+// };
 
 // export const getStaticPaths = async () => {
 //   const result = await client.getEntries({
@@ -97,5 +107,36 @@ export const getServerSideProps = async ({ params }) => {
 //     fallback: false, //indicates the type of fallback
 //   };
 // };
+
+export const getStaticPaths = async () => {
+  const files = fs.readdirSync('cms-pages');
+  const paths = files.map((filename) => ({
+    params: {
+      page: filename.replace('.md', ''),
+    },
+  }));
+
+  return {
+    paths,
+    fallback: false,
+  };
+};
+
+export const getStaticProps = async ({ params: { page } }) => {
+  const markdownWithMetadata = fs
+    .readFileSync(path.join('cms-pages', page + '.md'))
+    .toString();
+
+  const parsedMarkdown = matter(markdownWithMetadata);
+
+  const htmlString = marked(parsedMarkdown.content);
+
+  return {
+    props: {
+      htmlString,
+      data: parsedMarkdown.data,
+    },
+  };
+};
 
 export default Page;

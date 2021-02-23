@@ -10,6 +10,7 @@ const Layout = ({ pageTitle, children }) => {
     <>
       <Head>
         <title>{pageTitle}</title>
+        <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
       </Head>
       <div className="container">
         <Header />
