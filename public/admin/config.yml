@@ -8,7 +8,7 @@ public_folder: /images
 collections:
   - name: 'page'
     label: 'Page' # Used in the UI
-    folder: 'cms-pages' # The path to the folder where the markdown files are stored
+    folder: 'cms/pages' # The path to the folder where the markdown files are stored
     create: true # Allow users to create new markdown files.
     slug: '{{slug}}'
     fields: # The fields for front matter. You will need to modify fields according to your project.
@@ -29,3 +29,16 @@ collections:
         fields:
           - { label: 'Content', name: 'content', widget: 'markdown' }
           - { label: 'image', name: 'image', widget: 'image' }
+
+  - name: 'homepage'
+    label: 'Homepage'
+    folder: 'cms/homepage'
+    delete: false,
+    create: false,
+    fields:
+        - { label: 'Page Title', name: 'title', widget: 'string' }
+        - {
+          label: 'Homepage Carousel',
+          name: 'carousel',
+          widget: 'list',
+          field: { label: Image, name: image, widget: image },

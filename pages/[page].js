@@ -48,7 +48,7 @@ const Page = ({ pageData: { pageTitle, carousel, contentRow, content } }) => {
 };
 
 export const getStaticPaths = async () => {
-  const files = fs.readdirSync('cms-pages');
+  const files = fs.readdirSync('cms/pages/');
   const paths = files.map((filename) => ({
     params: {
       page: filename.replace('.md', ''),
@@ -63,7 +63,7 @@ export const getStaticPaths = async () => {
 
 export const getStaticProps = async ({ params: { page } }) => {
   const markdownWithMetadata = fs
-    .readFileSync(path.join('cms-pages', page + '.md'))
+    .readFileSync(path.join('cms/pages', page + '.md'))
     .toString();
 
   const { data } = matter(markdownWithMetadata);
