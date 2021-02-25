@@ -36,9 +36,10 @@ collections:
     delete: false,
     create: false,
     fields:
-        - { label: 'Page Title', name: 'title', widget: 'string' }
-        - {
+      - { label: 'Page Title', name: 'title', widget: 'string' }
+      - {
           label: 'Homepage Carousel',
           name: 'carousel',
           widget: 'list',
           field: { label: Image, name: image, widget: image },
+        }
