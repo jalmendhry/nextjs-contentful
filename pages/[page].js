@@ -8,10 +8,10 @@ import 'react-responsive-carousel/lib/styles/carousel.min.css';
 
 import Layout from '../components/Layout';
 
-const Page = ({ pageData: { pageTitle, carousel, contentRow, content } }) => {
+const Page = ({ pageData: { title, carousel, contentRow, content } }) => {
   return (
     <>
-      <Layout pageTitle={pageTitle}>
+      <Layout pageTitle={title}>
         {carousel && carousel.length > 0 && (
           <Carousel>
             {carousel.map((image, index) => {
