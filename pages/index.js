@@ -1,10 +1,14 @@
-import React, { useEffect } from 'react';
-import Layout from '../components/Layout';
 import fs from 'fs';
 import path from 'path';
 import matter from 'gray-matter';
 
-const Home = ({ pageTitle }) => {
+import React, { useEffect } from 'react';
+import { Carousel } from 'react-responsive-carousel';
+import 'react-responsive-carousel/lib/styles/carousel.min.css';
+
+import Layout from '../components/Layout';
+
+const Home = ({ pageData: { title, carousel } }) => {
   useEffect(() => {
     if (window.netlifyIdentity) {
       window.netlifyIdentity.on('init', (user) => {
@@ -19,8 +23,20 @@ const Home = ({ pageTitle }) => {
 
   return (
     <>
-      <Layout pageTitle={pageTitle}>
+      <Layout pageTitle={title}>
         <h1>Homepage</h1>
+        {carousel && carousel.length > 0 && (
+          <Carousel>
+            {carousel.map((image, index) => {
+              return (
+                <div key={index}>
+                  <img src={image} alt=""></img>
+                  <p className="legend">some image</p>
+                </div>
+              );
+            })}
+          </Carousel>
+        )}
       </Layout>
     </>
   );
