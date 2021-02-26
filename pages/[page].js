@@ -11,7 +11,7 @@ import Layout from '../components/Layout';
 const Page = ({ pageData: { title, carousel, contentRow, content } }) => {
   return (
     <>
-      <Layout pageTitle={title}>
+      <Layout pageTitle={title || 'Some page title'}>
         {carousel && carousel.length > 0 && (
           <Carousel>
             {carousel.map((image, index) => {
@@ -25,9 +25,11 @@ const Page = ({ pageData: { title, carousel, contentRow, content } }) => {
           </Carousel>
         )}
 
-        <div className="content-wrapper">
-          <ReactMarkdown>{content}</ReactMarkdown>
-        </div>
+        {content && (
+          <div className="content-wrapper">
+            <ReactMarkdown>{content}</ReactMarkdown>
+          </div>
+        )}
 
         {contentRow &&
           contentRow.map((row, index) => {
