@@ -8,7 +8,7 @@ class MyDocument extends Document {
 
   render() {
     return (
-      <Html lang={'en'}>
+      <Html lang="en">
         <Head>
           <meta name="description" content="Some Description"></meta>
         </Head>
