@@ -33,6 +33,7 @@ collections:
   - name: 'homepage'
     label: 'Homepage'
     folder: 'cms/homepage'
+    delete: false
     fields:
       - { label: 'Page Title', name: 'title', widget: 'string' }
       - {
