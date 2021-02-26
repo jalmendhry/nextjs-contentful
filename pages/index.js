@@ -5,7 +5,6 @@ import matter from 'gray-matter';
 import React, { useEffect } from 'react';
 import { Carousel } from 'react-responsive-carousel';
 import 'react-responsive-carousel/lib/styles/carousel.min.css';
-import Image from 'next/image';
 import Layout from '../components/Layout';
 
 const Home = ({ pageData: { title, carousel } }) => {

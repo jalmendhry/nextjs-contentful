@@ -51,6 +51,7 @@ const Page = ({ pageData: { title, carousel, contentRow, content } }) => {
 
 export const getStaticPaths = async () => {
   const files = fs.readdirSync('cms/pages/');
+  console.log(files);
   const paths = files.map((filename) => ({
     params: {
       page: filename.replace('.md', ''),
