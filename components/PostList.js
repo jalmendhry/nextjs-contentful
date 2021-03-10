@@ -10,7 +10,6 @@ const PostList = () => {
       .getEntries({ content_type: 'post' })
       .then(({ items }) => {
         setPosts(items);
-        console.log(items);
       })
       .catch(console.error);
   }, []);

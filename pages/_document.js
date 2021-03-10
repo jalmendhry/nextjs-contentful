@@ -6,13 +6,6 @@ class MyDocument extends Document {
     return { ...initialProps };
   }
 
-  componentDidMount() {
-    if (typeof window.__REACT_DEVTOOLS_GLOBAL_HOOK__ === 'object') {
-      console.log('we here bouys');
-      __REACT_DEVTOOLS_GLOBAL_HOOK__.inject = function () {};
-    }
-  }
-
   render() {
     return (
       <Html lang="en">

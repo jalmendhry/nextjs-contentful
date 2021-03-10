@@ -1,3 +1,4 @@
+import { useEffect, useState } from 'react';
 import ReactMarkdown from 'react-markdown';
 import { Carousel } from 'react-responsive-carousel';
 import 'react-responsive-carousel/lib/styles/carousel.min.css';
@@ -5,11 +6,28 @@ import 'react-responsive-carousel/lib/styles/carousel.min.css';
 import { getEntries, getPageEntryBySlug } from '../components/client';
 import Layout from '../components/Layout';
 
-const Page = ({ pageData }) => {
+const Page = ({ pageData, preview }) => {
   const { pageTitle } = pageData;
-  console.log(pageData);
+  const [redirect, setRedirect] = useState(null);
+  useEffect(() => {
+    setRedirect(window.location.pathname);
+  }, []);
   return (
     <>
+      {preview && (
+        <div
+          style={{
+            background: 'black',
+            color: 'white',
+            display: 'flex',
+            justifyContent: 'space-between',
+            alignItems: 'center',
+            padding: '0 1rem',
+          }}>
+          <p>Preview mode enabled</p>
+          <a href={`api/end-preview?url=${redirect}`}>Exit preview</a>
+        </div>
+      )}
       <Layout pageTitle={pageTitle || 'Some page title'}>
         <h1>{pageTitle}</h1>
         {/* {carousel && carousel.length > 0 && (
@@ -63,13 +81,13 @@ export const getStaticPaths = async () => {
 };
 
 export const getStaticProps = async ({ params: { page }, preview }) => {
-  console.log(preview);
   const result = await getPageEntryBySlug(page, preview);
   const entries = result.map(({ fields }) => fields);
 
   return {
     props: {
       pageData: entries[0],
+      preview: preview || null,
     },
   };
 };
